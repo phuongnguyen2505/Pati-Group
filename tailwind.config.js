@@ -1,37 +1,55 @@
-/** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Montserrat", "sans-serif"],
-        serif: ["Trirong", "serif"],
+        sans: ['Montserrat', 'sans-serif'],
+        serif: ['Trirong', 'serif'],
+        mono: ['Nunito', 'sans-serif'],
+        lora: ['Lora', 'serif']
       },
       colors: {
-        background: "rgb(255, 255, 255)",
-        foreground: "rgb(0, 0, 0)",
-        primary: "rgb(18, 18, 18)",
-        "primary-foreground": "rgb(255, 255, 255)",
         border: "rgba(0, 0, 0, 0.1)",
-        input: "rgba(0, 0, 0, 0.55)",
+        input: "rgba(0, 0, 0, 0.1)",
+        background: "#ffffff",
+        foreground: "#000000",
+
+        primary: {
+          DEFAULT: "#121212",
+          foreground: "#ffffff",
+        },
+        secondary: {
+          DEFAULT: "#f4f4f5",
+          foreground: "#18181b",
+        },
+        urgent: "#D32F2F",
+        success: "#2E7D32",
+        cream: "#f3eee0",
+        'cream-dark': "#F5F5F0"
       },
       borderRadius: {
-        none: "0px",
-        pill: "40px",
-        badge: "4.0rem",
-      },
-      transitionDuration: {
-        200: "0.2s",
-        500: "0.5s",
+        lg: "0.5rem",
+        md: "calc(0.5rem - 2px)",
+        sm: "calc(0.5rem - 4px)",
+        pill: "40px"
       },
       maxWidth: {
-        page: "120rem",
+        'page': '1340px',
       },
-      spacing: {
-        "grid-desktop": "8px",
-        "grid-mobile": "4px",
+      animation: {
+        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'marquee': 'marquee 60s linear infinite',
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
       },
     },
   },
   plugins: [],
-};
+}
