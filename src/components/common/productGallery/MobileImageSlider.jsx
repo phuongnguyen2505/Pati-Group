@@ -3,49 +3,61 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 
 export default function MobileImageSlider({ images, nysaleImage, onOpenModal }) {
     const extendedImages = [images[images.length - 1], ...images, images[0]]
-
     const [currentIndex, setCurrentIndex] = useState(1)
     const [isTransitioning, setIsTransitioning] = useState(false)
     const [touchStart, setTouchStart] = useState(null)
     const [touchEnd, setTouchEnd] = useState(null)
 
+    const [thumbnailOffset, setThumbnailOffset] = useState(0)
+    const [thumbnailTransitioning, setThumbnailTransitioning] = useState(false)
+
     const moveSlide = (direction) => {
         if (isTransitioning) return
         setIsTransitioning(true)
+        setThumbnailTransitioning(true)
         setCurrentIndex(prev => prev + direction)
+        setThumbnailOffset(prev => prev + direction)
     }
 
     useEffect(() => {
         if (!isTransitioning) return
-
         const transitionEnd = () => {
             setIsTransitioning(false)
-            if (currentIndex === extendedImages.length - 1) {
+
+            if (currentIndex >= extendedImages.length - 1) {
                 setCurrentIndex(1)
-            } else if (currentIndex === 0) {
+            } else if (currentIndex <= 0) {
                 setCurrentIndex(extendedImages.length - 2)
             }
         }
-
         const timer = setTimeout(transitionEnd, 300)
         return () => clearTimeout(timer)
     }, [currentIndex, isTransitioning, extendedImages.length])
 
-    const minSwipeDistance = 50
+    useEffect(() => {
+        if (!thumbnailTransitioning) return
+        const timer = setTimeout(() => {
+            setThumbnailTransitioning(false)
+            if (thumbnailOffset >= images.length) {
+                setThumbnailOffset(0)
+            } else if (thumbnailOffset < 0) {
+                setThumbnailOffset(images.length - 1)
+            }
+        }, 300)
+        return () => clearTimeout(timer)
+    }, [thumbnailOffset, thumbnailTransitioning, images.length])
 
+    const minSwipeDistance = 50
     const onTouchStart = (e) => {
         setTouchEnd(null)
         setTouchStart(e.targetTouches[0].clientX)
     }
-
     const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX)
-
     const onTouchEnd = () => {
         if (!touchStart || !touchEnd) return
         const distance = touchStart - touchEnd
         const isLeftSwipe = distance > minSwipeDistance
         const isRightSwipe = distance < -minSwipeDistance
-
         if (isLeftSwipe) moveSlide(1)
         if (isRightSwipe) moveSlide(-1)
     }
@@ -54,21 +66,40 @@ export default function MobileImageSlider({ images, nysaleImage, onOpenModal }) 
     if (realIndex < 0) realIndex = images.length - 1
     if (realIndex >= images.length) realIndex = 0
 
-    const getVisibleThumbnails = () => {
-        const thumbs = []
-        for (let i = 1; i <= 4; i++) {
-            const idx = (realIndex + i) % images.length
-            thumbs.push({ image: images[idx], targetIndex: idx })
+    const handleThumbnailClick = (clickedRealIndex) => {
+        if (isTransitioning) return
+        if (clickedRealIndex === realIndex) return
+
+        const diff = clickedRealIndex - realIndex
+        let direction
+
+        if (Math.abs(diff) <= images.length / 2) {
+            direction = diff
+        } else {
+            direction = diff > 0 ? diff - images.length : diff + images.length
         }
-        return thumbs
+
+        setIsTransitioning(true)
+        setThumbnailTransitioning(true)
+        setCurrentIndex(prev => prev + direction)
+        setThumbnailOffset(prev => prev + direction)
     }
 
-    const visibleThumbnails = getVisibleThumbnails()
+    const createExtendedThumbnails = () => {
+        const copies = 3
+        const extended = []
+        for (let i = 0; i < copies; i++) {
+            extended.push(...images)
+        }
+        return extended
+    }
 
-    const handleThumbnailClick = (targetRealIndex) => {
-        if (isTransitioning) return
-        setIsTransitioning(true)
-        setCurrentIndex(targetRealIndex + 1)
+    const extendedThumbnails = createExtendedThumbnails()
+
+    const getThumbnailTransform = () => {
+        const startOffset = images.length
+        const currentOffset = startOffset + thumbnailOffset
+        return currentOffset * 25
     }
 
     return (
@@ -83,12 +114,11 @@ export default function MobileImageSlider({ images, nysaleImage, onOpenModal }) 
                     className="flex w-full h-full"
                     style={{
                         transform: `translateX(-${currentIndex * 100}%)`,
-                        transition: isTransitioning ? 'transform 300ms ease-in-out' : 'none'
+                        transition: isTransitioning ? 'transform 300ms cubic-bezier(0.4, 0, 0.2, 1)' : 'none'
                     }}
                 >
                     {extendedImages.map((img, idx) => {
                         const isFirstSlide = idx === 1 || idx === extendedImages.length - 1
-
                         return (
                             <div key={idx} className="relative w-full flex-shrink-0 h-full flex items-center justify-center">
                                 <img
@@ -96,7 +126,6 @@ export default function MobileImageSlider({ images, nysaleImage, onOpenModal }) 
                                     alt={`Slide ${idx}`}
                                     className="w-full h-full object-cover pointer-events-none"
                                 />
-
                                 {isFirstSlide && (
                                     <>
                                         <div className="absolute bottom-4 left-0 right-0 px-4 z-20 flex justify-center pointer-events-auto">
@@ -128,14 +157,12 @@ export default function MobileImageSlider({ images, nysaleImage, onOpenModal }) 
                         )
                     })}
                 </div>
-
                 <button
                     onClick={() => moveSlide(-1)}
                     className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/40 backdrop-blur-sm border border-white flex items-center justify-center text-white z-20 hover:bg-white/60 transition-all active:scale-90"
                 >
                     <FiChevronLeft size={20} />
                 </button>
-
                 <button
                     onClick={() => moveSlide(1)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/40 backdrop-blur-sm border border-white flex items-center justify-center text-white z-20 hover:bg-white/60 transition-all active:scale-90"
@@ -143,17 +170,46 @@ export default function MobileImageSlider({ images, nysaleImage, onOpenModal }) 
                     <FiChevronRight size={20} />
                 </button>
             </div>
-
-            <div className="grid grid-cols-4 gap-2">
-                {visibleThumbnails.map((item, idx) => (
-                    <div
-                        key={idx}
-                        onClick={() => handleThumbnailClick(item.targetIndex)}
-                        className="aspect-square rounded-xl overflow-hidden border border-transparent opacity-70 hover:opacity-100 cursor-pointer transition-all active:scale-95"
-                    >
-                        <img src={item.image} alt={`Thumb ${idx}`} className="w-full h-full object-cover" />
-                    </div>
-                ))}
+            <div className="relative overflow-hidden">
+                <div
+                    className="flex"
+                    style={{
+                        transform: `translateX(-${getThumbnailTransform()}%)`,
+                        transition: thumbnailTransitioning
+                            ? 'transform 300ms cubic-bezier(0.4, 0, 0.2, 1)'
+                            : 'none'
+                    }}
+                >
+                    {extendedThumbnails.map((img, idx) => {
+                        const thumbRealIndex = idx % images.length
+                        const isActive = thumbRealIndex === realIndex
+                        return (
+                            <div
+                                key={idx}
+                                onClick={() => handleThumbnailClick(thumbRealIndex)}
+                                className="flex-shrink-0 px-1"
+                                style={{ width: '25%' }}
+                            >
+                                <div
+                                    className={`
+                                        aspect-square rounded-xl overflow-hidden cursor-pointer 
+                                        transition-all duration-300 ease-out
+                                        ${isActive
+                                            ? 'border-2 border-green-500 opacity-100 shadow-lg scale-105 ring-2 ring-green-200'
+                                            : 'border border-gray-200 opacity-60 hover:opacity-90'
+                                        }
+                                    `}
+                                >
+                                    <img
+                                        src={img}
+                                        alt={`Thumb ${idx}`}
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
             </div>
         </div>
     )

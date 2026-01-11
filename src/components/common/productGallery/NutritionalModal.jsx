@@ -1,18 +1,40 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import Button from '../Button'
 
 export default function NutritionalModal({ open, onClose }) {
-    if (!open) return null
+    const [isVisible, setIsVisible] = useState(false)
+    const [shouldRender, setShouldRender] = useState(false)
+
+    useEffect(() => {
+        if (open) {
+            setShouldRender(true)
+            setTimeout(() => setIsVisible(true), 10)
+        } else {
+            setIsVisible(false)
+            setTimeout(() => setShouldRender(false), 200)
+        }
+    }, [open])
+
+    if (!shouldRender) return null
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4 backdrop-blur-sm">
-            <div className="relative w-full max-w-[450px] rounded-xl bg-white p-6 shadow-2xl animate-in fade-in zoom-in duration-200">
+        <div
+            className={`fixed inset-0 z-50 flex items-center justify-center px-4 backdrop-blur-sm transition-all duration-200 ${isVisible ? 'bg-black/40 opacity-100' : 'bg-black/0 opacity-0'
+                }`}
+            onClick={onClose}
+        >
+            <div
+                onClick={(e) => e.stopPropagation()}
+                className={`relative w-full max-w-[450px] rounded-xl bg-white p-6 shadow-2xl transition-all duration-200 ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
+                    }`}
+            >
                 <button
                     onClick={onClose}
                     className="absolute right-4 top-4 flex h-7 w-7 items-center justify-center rounded-full border border-rose-300 text-rose-500 hover:bg-rose-50 transition-colors"
                 >
-                    <span className="text-lg leading-none pt-0.5">×</span>
+                    <span className="text-2xl leading-none pt-0.5">×</span>
                 </button>
-                <h2 className="mb-5 text-center font-serif text-2xl text-gray-900">
+                <h2 className="mb-5 text-center font-serif text-xl lg:text-2xl text-gray-900">
                     Nutritional Information
                 </h2>
                 <div className="mb-6 overflow-hidden rounded-lg">
@@ -23,9 +45,10 @@ export default function NutritionalModal({ open, onClose }) {
                         className="h-auto w-full object-contain"
                     />
                 </div>
-                <button className="mb-6 w-full rounded bg-black py-4 text-sm font-medium uppercase tracking-wide text-white shadow-lg transition-transform hover:scale-[1.01] active:scale-[0.99]">
-                    Try Lymphatic Drainage Risk-Free
-                </button>
+                <Button
+                    text="Try Lymphatic Drainage Risk-Free"
+                    className="text-sm"
+                />
                 <div className="flex flex-wrap justify-center gap-x-4 gap-y-3 text-[11px] text-gray-600">
                     <BenefitItem text="Made & produced in the USA" />
                     <BenefitItem text="100% Natural Ingredients" />
@@ -36,6 +59,7 @@ export default function NutritionalModal({ open, onClose }) {
         </div>
     )
 }
+
 function BenefitItem({ text }) {
     return (
         <div className="flex items-center gap-1.5">

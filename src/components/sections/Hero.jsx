@@ -1,6 +1,9 @@
 import LogoMarquee from '../common/Marquee';
+import DrainageSystemSection from './Drainage';
 import ProductGallery from './ProductGallery';
 import ProductInfo from './ProductInfo';
+import SymptomsSection from './Symptom';
+import WhyFailedSection from './WhyFailed';
 
 export default function Hero() {
     return (
@@ -15,8 +18,17 @@ export default function Hero() {
                     </div>
                 </div>
             </div>
-            <div className="w-full lg:col-span-12">
+            <div className="w-ful mt-8 lg:col-span-12">
                 <LogoMarquee />
+            </div>
+            <div className="">
+                <SymptomsSection />
+            </div>
+            <div className="">
+                <DrainageSystemSection />
+            </div>
+            <div className="">
+                <WhyFailedSection />
             </div>
         </section>
     );

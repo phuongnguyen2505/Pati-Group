@@ -14,7 +14,7 @@ export default function LogoMarquee() {
             <div className="relative w-full flex overflow-hidden mask-image-linear-gradient">
                 <div className="flex animate-marquee whitespace-nowrap items-center">
                     {repeatedLogos.map((logo, index) => (
-                        <div key={`a-${index}`} className="mx-12 w-32 flex-shrink-0 flex items-center justify-center">
+                        <div key={`a-${index}`} className="mx-8 lg:mx-12 w-24 lg:w-32 flex-shrink-0 flex items-center justify-center">
                             <img
                                 src={logo.src}
                                 alt={logo.name}
@@ -25,7 +25,7 @@ export default function LogoMarquee() {
                 </div>
                 <div className="flex animate-marquee whitespace-nowrap items-center">
                     {repeatedLogos.map((logo, index) => (
-                        <div key={`b-${index}`} className="mx-12 w-32 flex-shrink-0 flex items-center justify-center">
+                        <div key={`b-${index}`} className="mx-8 lg:mx-12 w-24 lg:w-32 flex-shrink-0 flex items-center justify-center">
                             <img
                                 src={logo.src}
                                 alt={logo.name}

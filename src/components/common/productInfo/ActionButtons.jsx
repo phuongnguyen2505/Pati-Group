@@ -1,12 +1,14 @@
 import React from 'react'
 import { FiRefreshCw, FiClock } from 'react-icons/fi'
+import Button from '../Button'
 
 export default function ActionButtons({ paymentImage, promoImage, policy }) {
     return (
         <div className="space-y-3 grid gap-2">
-            <button className="w-full bg-primary text-white py-4 rounded text-[15px] font-bold tracking-widest hover:bg-black transition-transform active:scale-[0.99] shadow-xl shadow-black/10 flex items-center justify-center gap-2">
-                ADD TO CART
-            </button>
+            <Button
+                text="ADD TO CART"
+                className="font-bold text-base lg:text-lg"
+            />
             <div className="flex justify-center items-center gap-2 lg:gap-6 text-xs lg:text-base">
                 <span className="flex items-center gap-1"><FiRefreshCw /> Refills Ship Every 12 Week</span>
                 <span className="border border-black h-full"></span>
