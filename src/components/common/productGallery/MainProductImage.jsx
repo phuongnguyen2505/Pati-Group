@@ -1,6 +1,8 @@
+import { PRODUCT_DATA } from '@/data/product'
 import React from 'react'
 
 export default function MainProductImage({ nysaleImage, mainImage, onOpenModal }) {
+    const { leaves } = PRODUCT_DATA
     return (
         <div className="relative w-full aspect-square rounded-xl overflow-hidden border border-border group shadow-sm bg-gray-100">
             {nysaleImage && (
@@ -24,7 +26,7 @@ export default function MainProductImage({ nysaleImage, mainImage, onOpenModal }
             >
                 <img
                     className="w-5 sm:w-6"
-                    src="/src/assets/icons/leaves.png"
+                    src={leaves}
                     alt=""
                 />
                 Nutritional Information

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Button from '../Button'
+import { PRODUCT_DATA } from '@/data/product'
 
 export default function NutritionalModal({ open, onClose }) {
+    const { images } = PRODUCT_DATA.nutritionalModal
+
     const [isVisible, setIsVisible] = useState(false)
     const [shouldRender, setShouldRender] = useState(false)
 
@@ -34,13 +37,13 @@ export default function NutritionalModal({ open, onClose }) {
                 >
                     <span className="text-2xl leading-none pt-0.5">×</span>
                 </button>
-                <h2 className="mb-5 text-center font-serif text-xl lg:text-2xl text-gray-900">
+                <h2 className="mb-5 text-center font-serif text-xl lg:text-2xl">
                     Nutritional Information
                 </h2>
                 <div className="mb-6 overflow-hidden rounded-lg">
                     <img
                         loading="lazy"
-                        src="/images/products/ingredients-min.png"
+                        src={images}
                         alt="Supplement Facts"
                         className="h-auto w-full object-contain"
                     />
