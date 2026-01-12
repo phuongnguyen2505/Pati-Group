@@ -42,7 +42,7 @@ export default function ShowcaseSection() {
                             text="Try Lymphatic Drainage Risk-Free"
                             className="w-full lg:w-fit lg:px-20 font-medium"
                         />
-                        <div className="flex items-center justify-center gap-3">
+                        <div className="flex items-center justify-center w-full mx-auto gap-3">
                             {policy?.[0]?.images && (
                                 <img
                                     src={policy[0].images}
@@ -50,7 +50,7 @@ export default function ShowcaseSection() {
                                     className="w-8 h-8 object-contain"
                                 />
                             )}
-                            <span className="text-[14px] text-gray-700 font-medium">
+                            <span className="text-[14px] font-medium">
                                 60-Day Money-Back Guarantee
                             </span>
                         </div>
