@@ -60,7 +60,7 @@ export default function SymptomsSection() {
                 </div>
                 <div className="relative max-w-4xl mx-auto mt-8 lg:mt-0">
                     <img
-                        src={cause.image}
+                        src={isMobile ? cause.imageMobile : cause.image}
                         alt={cause.alt}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />

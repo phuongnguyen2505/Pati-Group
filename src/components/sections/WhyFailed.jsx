@@ -17,7 +17,7 @@ export default function WhyFailedSection() {
     return (
         <section className="w-full bg-[#f7f2e7] py-16 px-4 md:px-6">
             <div className="max-w-7xl mx-auto">
-                <h2 className="text-center font-serif text-3xl md:text-4xl text-gray-900 mb-12">
+                <h2 className="text-center font-serif text-3xl md:text-4xl mb-12">
                     Why Nothing Has <span className="text-[#008753]">Worked</span>
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
@@ -31,7 +31,7 @@ export default function WhyFailedSection() {
                                 />
                             </div>
                             <div className="bg-white px-6 py-6 text-center border-x border-gray-100 flex flex-col flex-grow">
-                                <p className="font-serif mb-6 text-lg text-gray-800 leading-snug">
+                                <p className="font-serif mb-6 text-lg leading-snug">
                                     {item.title}
                                 </p>
                                 <div className="bg-[#ffe3e3] py-2 px-4 lg:px-6 rounded-lg flex-grow border-b border-x border-rose-100 text-center flex flex-col">

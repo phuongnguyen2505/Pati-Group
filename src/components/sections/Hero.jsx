@@ -1,9 +1,17 @@
 import LogoMarquee from '../common/Marquee';
+import ReviewsSection from './Reviews';
 import DrainageSystemSection from './Drainage';
+import IngredientsSystem from './IngredientsSystem';
 import ProductGallery from './ProductGallery';
 import ProductInfo from './ProductInfo';
 import SymptomsSection from './Symptom';
 import WhyFailedSection from './WhyFailed';
+import PoliciesSection from './Policies';
+import ExpertAdviceSection from './ExpertAdvice';
+import StoriesSection from './Stories';
+import FAQSection from './Faq';
+import MissionStatsSection from './MissionStats';
+import ShowcaseSection from './Showcase';
 
 export default function Hero() {
     return (
@@ -21,15 +29,19 @@ export default function Hero() {
             <div className="w-ful mt-8 lg:col-span-12">
                 <LogoMarquee />
             </div>
-            <div className="">
-                <SymptomsSection />
+            <SymptomsSection />
+            <DrainageSystemSection />
+            <WhyFailedSection />
+            <div className="mt-8">
+                <IngredientsSystem />
             </div>
-            <div className="">
-                <DrainageSystemSection />
-            </div>
-            <div className="">
-                <WhyFailedSection />
-            </div>
+            <ReviewsSection />
+            <PoliciesSection />
+            <ExpertAdviceSection />
+            <StoriesSection />
+            <FAQSection />
+            <MissionStatsSection />
+            <ShowcaseSection />
         </section>
     );
 }
