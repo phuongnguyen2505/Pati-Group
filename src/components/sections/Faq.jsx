@@ -63,10 +63,10 @@ export default function FAQSection() {
                         />
                     ))}
                 </div>
-                <div className="space-y-4 text-center">
+                <div className="w-full space-y-4 text-center">
                     <Button
                         text="Try Lymphatic Drainage Risk-Free"
-                        className="w-full lg:w-fit px-8 lg:px-20 font-medium"
+                        className="w-full lg:w-fit lg:px-20 font-medium"
                     />
                     <div className="flex items-center justify-center gap-2 font-medium">
                         {policy?.[0]?.images && (

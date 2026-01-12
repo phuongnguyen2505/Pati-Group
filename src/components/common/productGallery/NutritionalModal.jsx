@@ -52,7 +52,7 @@ export default function NutritionalModal({ open, onClose }) {
                     text="Try Lymphatic Drainage Risk-Free"
                     className="text-sm"
                 />
-                <div className="flex flex-wrap justify-center gap-x-4 gap-y-3 text-[11px] text-gray-600">
+                <div className="flex flex-wrap justify-center gap-x-4 gap-y-3 text-[11px] mt-3 text-gray-600">
                     <BenefitItem text="Made & produced in the USA" />
                     <BenefitItem text="100% Natural Ingredients" />
                     <BenefitItem text="60-Day Money-Back Guarantee" />

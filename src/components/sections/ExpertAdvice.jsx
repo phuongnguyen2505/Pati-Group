@@ -7,7 +7,7 @@ export default function ExpertAdviceSection() {
     const { policy } = PRODUCT_DATA
 
     return (
-        <section className="w-full py-12 px-4 md:px-6">
+        <section className="w-full py-12 md:px-6">
             <div className="max-w-7xl mx-auto rounded-3xl overflow-hidden shadow-sm grid grid-cols-1 lg:grid-cols-2">
                 <div className="w-full h-full bg-[#f7f7f7] p-8 md:p-12 flex flex-col justify-center order-2 lg:order-1">
                     <span className=" text-xs font-medium uppercase tracking-wider mb-4">
@@ -23,7 +23,7 @@ export default function ExpertAdviceSection() {
                     <div className="mt-8 space-y-4">
                         <Button
                             text="Try Lymphatic Drainage Risk-Free"
-                            className="w-full md:w-3/4 font-medium"
+                            className="w-full md:w-full lg:px-20 font-medium"
                         />
                         <div className="flex items-center justify-center gap-2 font-medium">
                             {policy?.[0]?.images && (
